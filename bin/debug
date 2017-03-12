@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+
+/**
+ * Created by lonord on 2017/3/10.
+ */
+
+const child_process = require('child_process');
+const path = require('path');
+const config = require('../package.json');
+
+const isWindows = require('os').platform() === 'win32';
+
+process.env = Object.assign(process.env, {
+    NODE_ENV: 'development',
+    PORT: config.debugPort || config.port || 3000
+});
+
+let webpack = isWindows ? '.\\node_modules\\.bin\\webpack' : './node_modules/.bin/webpack';
+
+child_process.spawn(webpack, '-d -w'.split(' '), {
+    cwd: path.join(__dirname, '../'),
+    env: process.env,
+    stdio: 'inherit',
+    shell: isWindows
+});
+
+require('./www');
+console.log(`server started, visit: http://localhost:${process.env.PORT}`);
