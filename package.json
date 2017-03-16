@@ -3,8 +3,8 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "start": "node ./bin/release",
-        "debug": "node ./bin/debug",
+        "start": "NODE_ENV=production node ./bin/launch",
+        "debug": "NODE_ENV=development node ./bin/launch",
         "server": "node ./bin/www"
     },
     "dependencies": {

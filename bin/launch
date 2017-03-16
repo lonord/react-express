@@ -1,0 +1,54 @@
+#!/usr/bin/env node
+
+/**
+ * Created by lonord on 2017/3/10.
+ */
+
+const webpack = require('webpack');
+const webpackConfig = require('../webpack.config');
+const config = require('../package.json');
+
+if (webpackConfig.watch) {
+    console.log('webpack is watching...');
+}
+
+webpack(webpackConfig, (err, stats) => {
+    console.log('|********************** webpack output *********************|');
+    if (err) {
+        console.error(err.stack || err);
+        if (err.details) {
+            console.error(err.details);
+        }
+    }
+    else {
+        const info = stats.toJson();
+        if (stats.hasErrors()) {
+            console.error(info.errors);
+        }
+        if (stats.hasWarnings()) {
+            console.warn(info.warnings);
+        }
+
+        console.log(`    hash: ${stats.hash}`);
+        let endTime = new Date(stats.endTime);
+        let usedTime = (stats.endTime - stats.startTime) / 1000;
+        console.log(`    completed at ${endTime}`);
+        console.log(`    used ${usedTime} seconds`);
+    }
+    console.log('|******************** webpack output end *******************|');
+});
+
+
+if (process.env.NODE_ENV == 'production') {
+    process.env = Object.assign(process.env, {
+        PORT: config.port || 3000
+    });
+}
+else {
+    process.env = Object.assign(process.env, {
+        PORT: config.debugPort || config.port || 3000
+    });
+}
+
+require('./www');
+console.log(`server started, visit: http://localhost:${process.env.PORT}`);
