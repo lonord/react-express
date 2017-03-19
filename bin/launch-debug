@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+
+process.env = Object.assign({
+    NODE_ENV: 'development',
+    PORT: 8059
+}, process.env);
+
+require('./launch');

@@ -6,7 +6,6 @@
 
 const webpack = require('webpack');
 const webpackConfig = require('../webpack.config');
-const config = require('../package.json');
 
 if (webpackConfig.watch) {
     console.log('webpack is watching...');
@@ -37,18 +36,6 @@ webpack(webpackConfig, (err, stats) => {
     }
     console.log('|******************** webpack output end *******************|');
 });
-
-
-if (process.env.NODE_ENV == 'production') {
-    process.env = Object.assign(process.env, {
-        PORT: config.port || 3000
-    });
-}
-else {
-    process.env = Object.assign(process.env, {
-        PORT: config.debugPort || config.port || 3000
-    });
-}
 
 require('./www');
 console.log(`server started, visit: http://localhost:${process.env.PORT}`);
