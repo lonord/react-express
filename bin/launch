@@ -7,12 +7,8 @@
 const webpack = require('webpack');
 const webpackConfig = require('../webpack.config');
 
-if (webpackConfig.watch) {
-    console.log('webpack is watching...');
-}
-
 webpack(webpackConfig, (err, stats) => {
-    console.log('|********************** webpack output *********************|');
+    console.log('\x1B[33m|********************** webpack output *********************|\x1B[0m');
     if (err) {
         console.error(err.stack || err);
         if (err.details) {
@@ -28,14 +24,17 @@ webpack(webpackConfig, (err, stats) => {
             console.warn(info.warnings);
         }
 
-        console.log(`    hash: ${stats.hash}`);
+        console.log(`\x1B[32m    hash: ${stats.hash}\x1B[0m`);
         let endTime = new Date(stats.endTime);
         let usedTime = (stats.endTime - stats.startTime) / 1000;
-        console.log(`    completed at ${endTime}`);
-        console.log(`    used ${usedTime} seconds`);
+        console.log(`\x1B[32m    completed at ${endTime}\x1B[0m`);
+        console.log(`\x1B[32m    used ${usedTime} seconds\x1B[0m`);
     }
-    console.log('|******************** webpack output end *******************|');
+    console.log('\x1B[33m|******************** webpack output end *******************|\x1B[0m');
+    if (webpackConfig.watch) {
+        console.log('webpack is \x1B[1m\x1B[35mwatching...\x1B[0m');
+    }
 });
 
 require('./www');
-console.log(`server started, visit: http://localhost:${process.env.PORT}`);
+console.log(`\x1B[36mserver started, visit: http://localhost:${process.env.PORT}\x1B[0m`);
