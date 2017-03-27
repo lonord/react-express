@@ -8,7 +8,7 @@ files/directories under root:
 - **webpack.config.js**: webpack config file
 - **package.json**: npm project config file
 - **bin**: starting scripts
-- **components**: react components
+- **react-src**: react source directory
 - **pages**: html pages
 - **public**: website's virtual root directory
 - **routes**: express router
