@@ -7,6 +7,10 @@
 const webpack = require('webpack');
 const webpackConfig = require('../webpack.config');
 
+let packFinished = false;
+
+console.log(`\x1B[36mwebpack is packing...\x1B[0m`);
+
 webpack(webpackConfig, (err, stats) => {
     console.log('\x1B[33m|********************** webpack output *********************|\x1B[0m');
     if (err) {
@@ -18,10 +22,14 @@ webpack(webpackConfig, (err, stats) => {
     else {
         const info = stats.toJson();
         if (stats.hasErrors()) {
-            console.error(info.errors);
+            info.errors.forEach(e => {
+                console.error(e);
+            });
         }
         if (stats.hasWarnings()) {
-            console.warn(info.warnings);
+            info.warnings.forEach(w => {
+                console.warn(w);
+            });
         }
 
         console.log(`\x1B[32m    hash: ${stats.hash}\x1B[0m`);
@@ -34,7 +42,10 @@ webpack(webpackConfig, (err, stats) => {
     if (webpackConfig.watch) {
         console.log('webpack is \x1B[1m\x1B[35mwatching...\x1B[0m');
     }
+    if (!packFinished) {
+        console.log(`\x1B[36mserver started, visit: http://localhost:${process.env.PORT}\x1B[0m`);
+        packFinished = true;
+    }
 });
 
 require('./www');
-console.log(`\x1B[36mserver started, visit: http://localhost:${process.env.PORT}\x1B[0m`);
