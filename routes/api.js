@@ -5,7 +5,15 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function (req, res, next) {
-    res.end('api index\n');
+    res.json({
+        msg: 'api index'
+    });
+});
+
+router.get('/info', function (req, res, next) {
+    res.json({
+        msg: 'This is the info from `/api/info`'
+    });
 });
 
 module.exports = router;
