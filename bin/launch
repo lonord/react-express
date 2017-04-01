@@ -43,9 +43,8 @@ webpack(webpackConfig, (err, stats) => {
         console.log('webpack is \x1B[1m\x1B[35mwatching...\x1B[0m');
     }
     if (!packFinished) {
+        require('./www');
         console.log(`\x1B[36mserver started, visit: http://localhost:${process.env.PORT}\x1B[0m`);
         packFinished = true;
     }
 });
-
-require('./www');
